@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.user.dao.UserDao">
+
+    <!-- 登录 -->
+    <select id="login" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from u_user
+        where email = #{email,jdbcType=VARCHAR} and  pswd = #{pswd,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据邮箱|帐号查询 -->
+    <select id="findUserByEmail" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from u_user
+        where email = #{email,jdbcType=VARCHAR}
+    </select>
+
+    <!--分页查询-->
+    <select id="findUserPage" parameterType="com.shiro.common.model.PageBean" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from u_user
+        where 1=1
+        <if test="param.nickname!=null and param.nickname!=''">
+            and nickname like concat(concat('%',#{param.nickname},'%'))
+        </if>
+        <if test="param.email!=null and param.email!=''">
+            and email like concat(concat('%',#{param.email},'%'))
+        </if>
+        ORDER by nickname asc limit #{start},#{pageSize}
+    </select>
+    <select id="selectUserCount" parameterType="com.shiro.common.model.PageBean" resultType="int">
+        select count(1) from u_user
+        where 1=1
+        <if test="param.nickname!=null and param.nickname!=''">
+            and nickname like concat(concat('%',#{param.nickname},'%'))
+        </if>
+        <if test="param.email!=null and param.email!=''">
+            and email like concat(concat('%',#{param.email},'%'))
+        </if>
+        ORDER by nickname asc
+    </select>
+
+    <!-- 添加 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.shiro.user.vo.User" >
+        insert into u_user (id, nickname, email,
+        pswd, create_time, last_login_time,status
+        )
+        values (#{id,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{pswd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP},#{status,jdbcType=BIGINT}
+        )
+    </insert>
+
+
+    <sql id="Base_Column_List" >
+        id, nickname, email, pswd, create_time, last_login_time,status
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.shiro.user.vo.User" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="pswd" property="pswd" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="BIGINT" />
+    </resultMap>
+</mapper>

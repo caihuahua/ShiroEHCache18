@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.permission.dao.PermissionDao">
+
+    <resultMap id="BaseResultMap" type="com.shiro.permission.vo.Permission" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.shiro.permission.vo.Permission" >
+        insert into u_permission(id,url,name) value(#{id},#{url},#{name})
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from u_permission
+        where id = #{id}
+    </delete>
+
+    <select id="findPermissionPage" resultMap="BaseResultMap" parameterType="com.shiro.common.model.PageBean">
+        select
+        <include refid="Base_Column_List" />
+        from u_permission
+        WHERE 1=1
+        <if test="param.name!=null and param.name!=''">
+            and name like concat(concat('%',#{param.name},'%'))
+        </if>
+        <if test="param.url!=null and param.url!=''">
+            and url like concat(concat('%',#{param.url},'%'))
+        </if>
+        order by name asc limit #{start},#{pageSize}
+    </select>
+    <select id="findPermissionCount" resultMap="int" parameterType="com.shiro.common.model.PageBean" >
+        select count(id) from u_permission
+        WHERE 1=1
+        <if test="param.name!=null and param.name!=''">
+            and name like concat(concat('%',#{param.name},'%'))
+        </if>
+        <if test="param.url!=null and param.url!=''">
+            and url like concat(concat('%',#{param.url},'%'))
+        </if>
+        order by name asc
+    </select>
+
+    <sql id="Base_Column_List" >
+        id, url, name
+    </sql>
+</mapper>
