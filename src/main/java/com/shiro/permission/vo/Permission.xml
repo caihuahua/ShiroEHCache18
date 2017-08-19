@@ -31,8 +31,8 @@
         </if>
         order by name asc limit #{start},#{pageSize}
     </select>
-    <select id="findPermissionCount" resultMap="int" parameterType="com.shiro.common.model.PageBean" >
-        select count(id) from u_permission
+    <select id="findPermissionCount" resultType="int" parameterType="com.shiro.common.model.PageBean" >
+        select count(1) from u_permission
         WHERE 1=1
         <if test="param.name!=null and param.name!=''">
             and name like concat(concat('%',#{param.name},'%'))

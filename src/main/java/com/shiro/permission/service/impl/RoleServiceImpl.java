@@ -5,6 +5,7 @@ import com.shiro.common.model.PageBean;
 import com.shiro.permission.service.RoleService;
 import com.shiro.permission.vo.Role;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 
@@ -16,6 +17,7 @@ public class RoleServiceImpl implements RoleService {
 		return 0;
 	}
 
+	@Transactional
 	public int insert(Role record) throws SQLException {
 		return 0;
 	}

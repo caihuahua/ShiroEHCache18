@@ -5,6 +5,7 @@ import com.shiro.common.model.PageBean;
 import com.shiro.user.vo.User;
 import com.shiro.user.service.UUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
@@ -17,8 +18,10 @@ public class UUserServiceImpl implements UUserService {
     @Resource
     UserDao userDao;
 
-    public int insert(User user) throws SQLException {
-        return userDao.insert(user);
+    @Transactional
+    public boolean insert(User user) throws SQLException {
+        int insert = userDao.insert(user);
+        return insert>0;
     }
 
     public User login(String email ,String pswd) throws SQLException {

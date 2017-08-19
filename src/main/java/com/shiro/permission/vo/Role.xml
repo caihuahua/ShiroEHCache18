@@ -31,8 +31,8 @@
         </if>
         order by name asc limit #{start},#{pageSize}
     </select>
-    <select id="findRoleCount" resultMap="int" parameterType="com.shiro.common.model.PageBean" >
-        select count(id) from u_role
+    <select id="findRoleCount" resultType="int" parameterType="com.shiro.common.model.PageBean" >
+        select count(1) from u_role
         WHERE 1=1
         <if test="param.name!=null and param.name!=''">
             and name like concat(concat('%',#{param.name},'%'))

@@ -4,7 +4,7 @@
 <mapper namespace="com.shiro.user.dao.UserDao">
 
     <!-- 登录 -->
-    <select id="login" resultMap="BaseResultMap">
+    <select id="login" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List" />
         from u_user
@@ -12,7 +12,7 @@
     </select>
 
     <!-- 根据邮箱|帐号查询 -->
-    <select id="findUserByEmail" resultMap="BaseResultMap" >
+    <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
         from u_user

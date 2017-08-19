@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface UUserService {
 
-    int insert(User user) throws SQLException;
+    boolean insert(User user) throws SQLException;
 
     User login(String email ,String pswd) throws SQLException;
 
