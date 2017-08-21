@@ -4,11 +4,15 @@
 <mapper namespace="com.shiro.user.dao.UserDao">
 
     <!-- 登录 -->
-    <select id="login" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="login" resultMap="BaseResultMap" parameterType="com.shiro.user.vo.User">
         select
         <include refid="Base_Column_List" />
         from u_user
-        where email = #{email,jdbcType=VARCHAR} and  pswd = #{pswd,jdbcType=VARCHAR}
+        where 1=1 and
+        email = #{email,jdbcType=VARCHAR}
+        <if test="pswd!=null and pswd!=''">
+            and  pswd = #{pswd,jdbcType=VARCHAR}
+        </if>
     </select>
 
     <!-- 根据邮箱|帐号查询 -->

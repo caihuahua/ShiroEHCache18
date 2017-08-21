@@ -9,7 +9,7 @@ public interface UUserService {
 
     boolean insert(User user) throws SQLException;
 
-    User login(String email ,String pswd) throws SQLException;
+    User login(User user) throws SQLException;
 
     User findUserByEmail(String email) throws SQLException;
 

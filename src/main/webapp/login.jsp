@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="zeromodal/zeroModal.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css" />
-		<link rel="stylesheet" type="text/css" href="pagestyle.css" />
+		<link rel="stylesheet" type="text/css" href="css/pagestyle.css" />
 		<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="zeromodal/zeroModal.min.js"></script>
@@ -20,36 +20,19 @@
                     window.location.href = "register.jsp";
                 })
 			    
-				$("#userid").focus();
 				$("#login").click(function() {
-					var userid = $("#userid").val();
-					userpass
-					var pass = $("#userpass").val();
-					if(!userid) {
-						zeroModal.alert({
-							content: "请输入用户名！",
-							okFn: function() {
-								$("input").focus()
-							}
-						});
-						return
-					}
 					$.ajax({
-						url: "/material/addMaterial.do?materialName=" + $("#materialName").val(),
+						type:"POST",
+						url: "/subLogin.do",
+						data:$("#loginForm").serialize(),
 						success: function(data) {
 							if(data.state == "true") {
 								zeroModal.success({
 									content: data.message,
 									okFn: function() {
-										$("input").val("");
-									},
-									cancel: true,
-									cancelTitle: '返回',
-									cancelFn: function() {
-										history.back(-1);
+                                        window.location.href="/top.jsp"
 									}
 								});
-
 							} else {
 								zeroModal.error(data.message);
 							}
@@ -65,18 +48,19 @@
 
 	<body>
 		<h1 align="center">登录</h1>
+		<form id="loginForm">
 		<table class="easytable">
 			<tr>
 				<td>
 					<label>账号:</label>
 				</td>
-				<td><input type="text" class="minput" id="userid" name="" placeholder="请输入账号"></td>
+				<td><input type="text" class="minput" id="email" name="email" placeholder="请输入邮箱账号"></td>
 			</tr>
 			<tr>
 				<td>
 					<label>密码:</label>
 				</td>
-				<td><input type="password" class="minput" id="userpass" name="" placeholder="请输入密码"></td>
+				<td><input type="password" class="minput" id="pswd" name="pswd" placeholder="请输入密码"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -85,6 +69,7 @@
 				</td>
 			</tr>
 		</table>
+		</form>
 	</body>
 
 </html>

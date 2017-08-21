@@ -24,11 +24,8 @@ public class UUserServiceImpl implements UUserService {
         return insert>0;
     }
 
-    public User login(String email ,String pswd) throws SQLException {
-        Map<String,Object> map=new HashMap<String, Object>();
-        map.put("email",email);
-        map.put("pswd",pswd);
-        User login = userDao.login(map);
+    public User login(User user) throws SQLException {
+        User login = userDao.login(user);
         return login;
     }
 

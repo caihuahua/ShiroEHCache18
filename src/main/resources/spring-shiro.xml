@@ -3,36 +3,40 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<description>== Shiro Components ==</description>
-    
-	<!-- 会话Session ID生成器 -->
-	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
-
-	<!-- 会话Cookie模板 -->
-	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<!--cookie的name，我故意取名叫xxxxbaidu -->
-	    <constructor-arg value="v_v-s-baidu"/>
-	    <property name="httpOnly" value="true"/>
-	    <!--cookie的有效时间 -->
-	    <property name="maxAge" value="-1"/>
-	    <!-- 配置存储Session Cookie的domain为 一级域名
-	    <property name="domain" value=".itboy.net"/>
-	     -->
+	<!-- 自定义的Realm -->
+	<bean id="myRealm" class="com.shiro.shiro.MyRealm">
 	</bean>
+
+	<!-- 会话Session ID生成器 -->
+	<!--<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>-->
+
+	<!--&lt;!&ndash; 会话Cookie模板 &ndash;&gt;-->
+	<!--<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">-->
+		<!--&lt;!&ndash;cookie的name，我故意取名叫xxxxbaidu &ndash;&gt;-->
+	    <!--<constructor-arg value="v_v-s-baidu"/>-->
+	    <!--<property name="httpOnly" value="true"/>-->
+	    <!--&lt;!&ndash;cookie的有效时间 &ndash;&gt;-->
+	    <!--<property name="maxAge" value="-1"/>-->
+	    <!--&lt;!&ndash; 配置存储Session Cookie的domain为 一级域名-->
+	    <!--<property name="domain" value=".itboy.net"/>-->
+	     <!--&ndash;&gt;-->
+	<!--</bean>-->
 
 
 	<!-- 会话验证调度器 -->
-	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
-		 <!-- 间隔多少时间检查，不配置是60分钟 -->
+<!--	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+		 &lt;!&ndash; 间隔多少时间检查，不配置是60分钟 &ndash;&gt;
 	     <property name="interval" value="${session.validate.timespan}"/>
 	     <property name="sessionManager" ref="sessionManager"/>
-	</bean>
+
+	</bean>-->
 
 	<!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
        <!-- <property name="realm" ref="sampleRealm"/>-->
-        <property name="sessionManager" ref="sessionManager"/>
+        <!--<property name="sessionManager" ref="sessionManager"/>-->
         <property name="cacheManager" ref="shiroEhcacheManager"/>
+		<property name="realm" ref="myRealm"/>
     </bean>
 
 	<!-- 用户缓存 -->
@@ -54,20 +58,20 @@
 
 
 	<!-- Session Manager -->
-	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-		<!-- 相隔多久检查一次session的有效性   -->
+<!--	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		&lt;!&ndash; 相隔多久检查一次session的有效性   &ndash;&gt;
 	 	<property name="sessionValidationInterval" value="1800000"/>  
-	 	 <!-- session 有效时间为半小时 （毫秒单位）-->  
+	 	 &lt;!&ndash; session 有效时间为半小时 （毫秒单位）&ndash;&gt;
 	<property name="globalSessionTimeout" value="1800000"/>
-	   <!-- 间隔多少时间检查，不配置是60分钟 -->
+	   &lt;!&ndash; 间隔多少时间检查，不配置是60分钟 &ndash;&gt;
 	  <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-	  <!-- 是否开启 检测，默认开启 -->
+	  &lt;!&ndash; 是否开启 检测，默认开启 &ndash;&gt;
 	  <property name="sessionValidationSchedulerEnabled" value="true"/>
-	   <!-- 是否删除无效的，默认也是开启 -->
+	   &lt;!&ndash; 是否删除无效的，默认也是开启 &ndash;&gt;
 	  <property name="deleteInvalidSessions" value="true"/>
-		<!-- 会话Cookie模板 -->
+		&lt;!&ndash; 会话Cookie模板 &ndash;&gt;
 	   <property name="sessionIdCookie" ref="sessionIdCookie"/>
-	</bean>
+	</bean>-->
 
 
 
@@ -83,10 +87,10 @@
 		<property name="filterChainDefinitions" >
 			<value>
 				/** = anon
-				/page/login.jsp = anon
-				/page/register/* = anon
-				/page/index.jsp = authc
-				/page/addItem* = authc,roles[数据管理员]
+				/login.jsp = anon
+				/register/* = anon
+				/top.jsp = anon
+				/addItem* = authc,roles[admin]
 				<!--/page/file* = authc,roleOR[普通用户,数据管理员]-->
 				<!--/page/listItems* = authc,roleOR[数据管理员,普通用户]-->
 				<!--/page/showItem* = authc,roleOR[数据管理员,普通用户]-->
@@ -94,14 +98,6 @@
             </value>
 		</property>
 		<!-- 读取初始自定义权限内容-->
-       <!--<property name="filters">
-           <util:map>
-              <entry key="login" value-ref="login"></entry>
-              <entry key="role" value-ref="role"></entry>
-              <entry key="simple" value-ref="simple"></entry>
-              <entry key="permission" value-ref="permission"></entry>
-           </util:map>
-       </property>-->
 	</bean>
 	<!-- Shiro生命周期处理器-->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />

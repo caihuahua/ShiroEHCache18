@@ -1,8 +1,8 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>导航</title>
@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="zeromodal/zeroModal.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css" />
-		<link rel="stylesheet" type="text/css" href="pagestyle.css" />
+		<link rel="stylesheet" type="text/css" href="css/pagestyle.css" />
 		<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="zeromodal/zeroModal.min.js"></script>
@@ -31,6 +31,7 @@
 									<li>
 										<a href="register.jsp" target="iFrame1">注册</a>
 									</li>
+									<shiro:hasPermission name="admin">
 									<li class="dropdown">
 										<a href="#" target="iFrame1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
 										<ul class="dropdown-menu">
@@ -53,6 +54,7 @@
 											</li>
 										</ul>
 									</li>
+									</shiro:hasPermission>
 								</ul>
 								<form class="navbar-form navbar-left">
 									<div class="form-group">
@@ -88,7 +90,7 @@
 						</div>
 						</nav>
 						
-					<iframe name="iFrame1" frameborder="no" src="login.jsp" height="800px" width="100%" scrolling="auto"> </iframe>
+					<iframe name="iFrame1" frameborder="no" src="" height="800px" width="100%" scrolling="auto"> </iframe>
 	</body>
 
 </html>

@@ -11,7 +11,7 @@ public interface UserDao {
 
     int insert(User user) throws SQLException;
 
-	User login(Map<String, Object> map) throws SQLException;
+	User login(User user) throws SQLException;
 
 	User findUserByEmail(String email) throws SQLException;
 
