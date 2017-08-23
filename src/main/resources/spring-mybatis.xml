@@ -21,22 +21,10 @@
 	</bean>
 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" /> 
-		<property name="password" value="${jdbc.password}" /> 
-		<property name="initialSize" value="${jdbc.initialSize}" /> 
-	    <property name="minIdle" value="${jdbc.minIdle}" /> 
-	    <property name="maxActive" value="${jdbc.maxActive}" /> 
-	    <property name="maxWait" value="${jdbc.maxWait}" /> 
-	    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" /> 
-	    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" /> 
-	    <property name="validationQuery" value="${jdbc.validationQuery}" /> 
-	    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" /> 
-	    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" /> 
-	    <property name="testOnReturn" value="${jdbc.testOnReturn}" /> 
-	    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" /> 
-	    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" /> 
-	    <property name="filters" value="${jdbc.filters}" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/shiro" />
+		<property name="username" value="root" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="password" value="root" />
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<property name="proxyFilters">

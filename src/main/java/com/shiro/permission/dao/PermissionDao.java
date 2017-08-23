@@ -14,4 +14,6 @@ public interface PermissionDao {
 
     List<Permission> findPermissionPage(PageBean<Permission> permissionPageBean) throws SQLException;
     int findPermissionCount(PageBean<Permission> permissionPageBean) throws SQLException;
+
+    List<String> selectAuthByUserNo(String userNo) throws SQLException;
 }

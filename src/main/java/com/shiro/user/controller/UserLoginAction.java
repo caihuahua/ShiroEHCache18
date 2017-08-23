@@ -60,6 +60,12 @@ public class UserLoginAction {
         return result;
     }
 
+    /**
+     * 登录
+     * @param user
+     * @return
+     * @throws SQLException
+     */
     @RequestMapping("/subLogin")
     @ResponseBody
     public Object subLogin(User user)throws SQLException{

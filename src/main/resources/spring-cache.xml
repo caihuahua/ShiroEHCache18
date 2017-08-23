@@ -6,18 +6,5 @@
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/cache
         http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
-
-	<description>ehcache缓存配置管理文件</description>
-
-	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:ehcache-shiro.xml"/>
-	</bean>
-
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-		<property name="cacheManager" ref="ehcache"/>
-	</bean>
-
-	<!-- 启用缓存注解开关 -->
-	<cache:annotation-driven cache-manager="cacheManager"/>
 </beans>
 
