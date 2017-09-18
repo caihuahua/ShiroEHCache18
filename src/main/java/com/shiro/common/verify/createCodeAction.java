@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * The Class
- *
+ *验证码显示
  * @author ChenCH
  *         on 2017-08-08
  */

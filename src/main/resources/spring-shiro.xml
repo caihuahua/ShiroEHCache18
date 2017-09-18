@@ -47,7 +47,7 @@
 				/login.jsp = anon
 				/register/* = anon
 				/top.jsp = anon
-				/addItem* = authc,roles[admin]
+				<!--/addItem* = authc,roles[admin]-->
 				<!--/page/file* = authc,roleOR[普通用户,数据管理员]-->
 				<!--/page/listItems* = authc,roleOR[数据管理员,普通用户]-->
 				<!--/page/showItem* = authc,roleOR[数据管理员,普通用户]-->

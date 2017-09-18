@@ -28,7 +28,9 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class MyRealm extends AuthorizingRealm {
@@ -66,12 +68,21 @@ public class MyRealm extends AuthorizingRealm {
             // 权限信息对象info，用来存放查出的用户的所有的角色及权限
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             //用户的角色集合
-            info.setRoles(roleDao.getRolesName(user.getId()));
-            List<Role> roleList = roleDao.getRoleList(user.getId());
+            List<Role> roleList =new ArrayList<Role>();
+            try {
+                info.setRoles((Set<String>) roleDao.selectRoleByUser(user.getId()));
+                roleList = roleDao.selectRoleList(user.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             for (Role role : roleList){
                 //用户的角色对应的所有权限
-                logger.info("角色: "+role.getName());
-                info.addStringPermissions(permissionService.getPermissionsName(role.getId()));
+                System.out.println("角色: "+role.getName());
+                try {
+                    info.addStringPermissions(authDao.selectPermissionsByRole(role.getId()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             return info;
         }

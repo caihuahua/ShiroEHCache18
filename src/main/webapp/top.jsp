@@ -31,6 +31,7 @@
 									<li>
 										<a href="register.jsp" target="iFrame1">注册</a>
 									</li>
+
 									<shiro:hasPermission name="admin">
 									<li class="dropdown">
 										<a href="#" target="iFrame1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>

@@ -43,6 +43,13 @@
         order by name asc
     </select>
 
+    <select id="selectPermissionsByRole" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from u_role r , u_permission p ,u_role_permission rp
+        WHERE r.id=rp.rid and p.id=rp.pid
+    </select>
+
     <sql id="Base_Column_List" >
         id, url, name
     </sql>

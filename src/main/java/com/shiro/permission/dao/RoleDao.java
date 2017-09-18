@@ -14,5 +14,7 @@ public interface RoleDao {
     List<Role> findRolePage(PageBean<Role> rolePageBean) throws SQLException;
     int findRoleCount(PageBean<Role> rolePageBean) throws SQLException;
 
-    List<String> selectRoleByUser(String userNo) throws SQLException;
+    List<String> selectRoleByUser(Long userNo) throws SQLException;
+    List<Role> selectRoleList(Long userNo) throws SQLException;
+
 }

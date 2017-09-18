@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * The Class
- *
+ *验证码生成
  * @author ChenCH
  *         on 2017-08-08
  */

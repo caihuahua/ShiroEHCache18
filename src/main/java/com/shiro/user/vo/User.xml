@@ -8,10 +8,12 @@
         select
         <include refid="Base_Column_List" />
         from u_user
-        where 1=1 and
-        email = #{email,jdbcType=VARCHAR}
+        where 1=1
+        <if test="email!=null and email!=''">
+            and email = #{email}
+        </if>
         <if test="pswd!=null and pswd!=''">
-            and  pswd = #{pswd,jdbcType=VARCHAR}
+            and  pswd = #{pswd}
         </if>
     </select>
 

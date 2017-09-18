@@ -43,6 +43,20 @@
         order by name asc
     </select>
 
+    <select id="selectRoleByUser" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from u_role r , u_user u ,u_user_role ur
+        WHERE r.id=ur.rid and u.id=ur.uid
+    </select>
+
+    <select id="selectRoleList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from u_role r , u_user u ,u_user_role ur
+        WHERE r.id=ur.rid and u.id=ur.uid
+    </select>
+
     <sql id="Base_Column_List" >
         id, name, type
     </sql>
