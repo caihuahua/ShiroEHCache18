@@ -58,26 +58,26 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String loginName = (String) super.getAvailablePrincipal(principals);
         System.out.println("权限认证!");
-        User user= null;
+        User user = null;
         try {
             user = userDao.findUserByEmail(loginName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (user != null){
+        if (user != null) {
             // 权限信息对象info，用来存放查出的用户的所有的角色及权限
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             //用户的角色集合
-            List<Role> roleList =new ArrayList<Role>();
+            List<Role> roleList = new ArrayList<Role>();
             try {
                 info.setRoles((Set<String>) roleDao.selectRoleByUser(user.getId()));
                 roleList = roleDao.selectRoleList(user.getId());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            for (Role role : roleList){
+            for (Role role : roleList) {
                 //用户的角色对应的所有权限
-                System.out.println("角色: "+role.getName());
+                System.out.println("角色: " + role.getName());
                 try {
                     info.addStringPermissions(authDao.selectPermissionsByRole(role.getId()));
                 } catch (SQLException e) {
@@ -101,16 +101,17 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken authToken) throws AuthenticationException {
+            AuthenticationToken authToken){
 
-        String username=(String)authToken.getPrincipal();
+        String email = (String) authToken.getPrincipal();
+        String pass = (String) authToken.getPrincipal();
 
-        System.out.println("验证当前Subject时获取到token为" + ReflectionToStringBuilder.toString(username, ToStringStyle.MULTI_LINE_STYLE));
+        System.out.println("验证当前Subject时获取到token为" + ReflectionToStringBuilder.toString(email, ToStringStyle.MULTI_LINE_STYLE));
 
         User user = null;
 
         try {
-            user=userDao.login(new User(username));
+            user = userDao.login(new User(email, pass));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,11 +120,11 @@ public class MyRealm extends AuthorizingRealm {
             AuthenticationInfo info = new SimpleAuthenticationInfo(user.getEmail(), user.getPswd(), getName());
             //将当前用户设置到Session中去以便获取当前用户信息
             this.setSession("loginUser", user);
-
             return info;
+        } else {
+            throw new AuthenticationException();
         }
 
-        return null;
     }
 
 

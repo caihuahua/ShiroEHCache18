@@ -4,6 +4,7 @@ import com.shiro.common.model.Result;
 import com.shiro.user.service.UUserService;
 import com.shiro.user.vo.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,18 @@ public class UserLoginAction {
 
     /**
      * 注册
+     *
      * @param user
      * @return
      * @throws SQLException
      */
     @RequestMapping("/subRegister")
     @ResponseBody
-    public Object subRegister(User user) throws SQLException{
-        String email=user.getEmail();
-        Result result=new Result();
+    public Object subRegister(User user) throws SQLException {
+        String email = user.getEmail();
+        Result result = new Result();
         User userByEmail = userService.findUserByEmail(email);
-        if(userByEmail!=null){
+        if (userByEmail != null) {
             result.setState("false");
             result.setMessage("帐号|Email已经存在！");
             return result;
@@ -50,10 +52,10 @@ public class UserLoginAction {
         //设置有效
         user.setStatus(User._1);
         boolean insert = userService.insert(user);
-        if(insert){
+        if (insert) {
             result.setState("true");
             result.setMessage("注册成功！");
-        }else{
+        } else {
             result.setState("false");
             result.setMessage("注册失败");
         }
@@ -62,27 +64,23 @@ public class UserLoginAction {
 
     /**
      * 登录
+     *
      * @param user
      * @return
-     * @throws SQLException
      */
     @RequestMapping("/subLogin")
     @ResponseBody
-    public Object subLogin(User user)throws SQLException{
-        User loginUser=null;
-        if(user!=null && !"".equals(user.getEmail()) && !"".equals(user.getPswd())){
-            loginUser = userService.login(user);
-            UsernamePasswordToken token = new UsernamePasswordToken(loginUser.getEmail(), loginUser.getPswd());
+    public Object subLogin(User user) {
+        Result result = new Result();
+        try {
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getEmail(), user.getPswd());
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
-        }
-        Result result=new Result();
-        if(loginUser!=null){
             result.setState("true");
             result.setMessage("登录成功！");
-        }else{
+        } catch (AuthenticationException ex) {
             result.setState("false");
-            result.setMessage("登录失败");
+            result.setMessage("用户名或密码错误");
         }
         return result;
     }

@@ -32,8 +32,9 @@ public class User implements Serializable{
     
     public User() {}
 
-    public User(String email) {
+    public User(String email, String pswd) {
         this.email = email;
+        this.pswd = pswd;
     }
 
     public User(User user) {
