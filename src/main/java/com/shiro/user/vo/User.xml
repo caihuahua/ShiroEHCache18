@@ -7,7 +7,7 @@
     <select id="login" resultMap="BaseResultMap" parameterType="com.shiro.user.vo.User">
         select
         <include refid="Base_Column_List" />
-        from u_user
+        from u_user u
         where 1=1
         <if test="email!=null and email!=''">
             and email = #{email}
@@ -21,7 +21,7 @@
     <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from u_user
+        from u_user u
         where email = #{email,jdbcType=VARCHAR}
     </select>
 
@@ -29,7 +29,7 @@
     <select id="findUserPage" parameterType="com.shiro.common.model.PageBean" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        from u_user
+        from u_user u
         where 1=1
         <if test="param.nickname!=null and param.nickname!=''">
             and nickname like concat(concat('%',#{param.nickname},'%'))
@@ -63,7 +63,7 @@
 
 
     <sql id="Base_Column_List" >
-        id, nickname, email, pswd, create_time, last_login_time,status
+        u.id, u.nickname, u.email, u.pswd, u.create_time, u.last_login_time,u.status
     </sql>
 
     <resultMap id="BaseResultMap" type="com.shiro.user.vo.User" >

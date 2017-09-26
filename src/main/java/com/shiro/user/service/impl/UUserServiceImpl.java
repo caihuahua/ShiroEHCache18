@@ -4,6 +4,7 @@ import com.shiro.user.dao.UserDao;
 import com.shiro.common.model.PageBean;
 import com.shiro.user.vo.User;
 import com.shiro.user.service.UUserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public class UUserServiceImpl implements UUserService {
         return insert>0;
     }
 
+    @Cacheable(value="testCache",key="#id")
     public User login(User user) throws SQLException {
         User login = userDao.login(user);
         return login;

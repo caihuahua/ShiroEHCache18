@@ -54,13 +54,13 @@
 				<td>
 					<label>账号:</label>
 				</td>
-				<td><input type="text" class="minput" id="email" name="email" placeholder="请输入邮箱账号"></td>
+				<td><input type="text" class="minput" id="email" value="admin" name="email" placeholder="请输入邮箱账号"></td>
 			</tr>
 			<tr>
 				<td>
 					<label>密码:</label>
 				</td>
-				<td><input type="password" class="minput" id="pswd" name="pswd" placeholder="请输入密码"></td>
+				<td><input type="password" class="minput" value="admin" id="pswd" name="pswd" placeholder="请输入密码"></td>
 			</tr>
 			<tr>
 				<td colspan="2">

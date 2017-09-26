@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -68,23 +69,21 @@ public class MyRealm extends AuthorizingRealm {
             // 权限信息对象info，用来存放查出的用户的所有的角色及权限
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             //用户的角色集合
-            List<Role> roleList = new ArrayList<Role>();
+            List<Role> roleList;
+            Set<String> roleNameSet = new HashSet<String>();
             try {
-                info.setRoles((Set<String>) roleDao.selectRoleByUser(user.getId()));
                 roleList = roleDao.selectRoleList(user.getId());
+                for (Role role : roleList) {
+                    //用户的角色对应的所有权限
+                    System.out.println("角色: " + role.getName());
+                    roleNameSet.add(role.getName());
+                    info.addStringPermissions(authDao.selectPermissionsByRole(role.getId()));
+                }
+                info.setRoles(roleNameSet);
+                return info;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            for (Role role : roleList) {
-                //用户的角色对应的所有权限
-                System.out.println("角色: " + role.getName());
-                try {
-                    info.addStringPermissions(authDao.selectPermissionsByRole(role.getId()));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            return info;
         }
         // 返回null将会导致用户访问任何被拦截的请求时都会自动跳转到unauthorizedUrl指定的地址
         return null;
@@ -101,7 +100,7 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken authToken){
+            AuthenticationToken authToken) {
 
         String email = (String) authToken.getPrincipal();
         String pass = (String) authToken.getPrincipal();

@@ -21,7 +21,7 @@
     <select id="findRolePage" resultMap="BaseResultMap" parameterType="com.shiro.common.model.PageBean">
         select
         <include refid="Base_Column_List" />
-        from u_role
+        from u_role r
         WHERE 1=1
         <if test="param.name!=null and param.name!=''">
             and name like concat(concat('%',#{param.name},'%'))
@@ -58,6 +58,6 @@
     </select>
 
     <sql id="Base_Column_List" >
-        id, name, type
+        r.id, r.name, r.type
     </sql>
 </mapper>

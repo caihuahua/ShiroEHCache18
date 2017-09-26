@@ -9,7 +9,7 @@ import java.util.Date;
  * 用户
  */
 public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6579533328390250520L;
 	//0:禁止登录
 	public static final Long _0 = new Long(0);
 	//1:有效

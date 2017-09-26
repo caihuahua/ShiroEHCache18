@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
-		 updateCheck="false">
+<ehcache>
 
-	<diskStore path="java.io.tmpdir" />
+		<diskStore path="d:/Cache" />
 
 	<defaultCache eternal="false"
 			maxElementsInMemory="1000"
@@ -21,4 +19,5 @@
 		   timeToIdleSeconds="0"
 		   timeToLiveSeconds="300"
 		   memoryStoreEvictionPolicy="LRU" />
+
 </ehcache>
