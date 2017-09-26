@@ -25,7 +25,6 @@ public class UUserServiceImpl implements UUserService {
         return insert>0;
     }
 
-    @Cacheable(value="testCache",key="#id")
     public User login(User user) throws SQLException {
         User login = userDao.login(user);
         return login;
